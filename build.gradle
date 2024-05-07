@@ -20,4 +20,11 @@ subprojects {
     test {
         useJUnitPlatform()
     }
+
+    task downloadDependencies {
+        doLast {
+            configurations.compileClasspath.resolvedConfiguration.resolvedArtifacts
+            configurations.testCompileClasspath.resolvedConfiguration.resolvedArtifacts
+        }
+    }
 }
