@@ -1,0 +1,16 @@
+networks:
+  tech-challenge-network:
+    driver: bridge
+
+services:
+  tech-challenge-api:
+    image: tech-challenge-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    container_name: tech-challenge-api
+    ports:
+      - "8080:8080"
+    networks:
+      - tech-challenge-network
