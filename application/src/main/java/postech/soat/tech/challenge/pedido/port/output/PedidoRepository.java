@@ -1,4 +1,4 @@
-package postech.soat.tech.challenge.pedido.repository;
+package postech.soat.tech.challenge.pedido.port.output;
 
 public interface PedidoRepository {
 }

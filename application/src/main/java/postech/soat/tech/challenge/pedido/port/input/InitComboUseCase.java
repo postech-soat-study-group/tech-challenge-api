@@ -1,4 +1,4 @@
-package postech.soat.tech.challenge.pedido.port.input.usecase;
+package postech.soat.tech.challenge.pedido.port.input;
 
 public interface InitComboUseCase {
 }
