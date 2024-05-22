@@ -5,12 +5,26 @@ networks:
 services:
   tech-challenge-api:
     image: tech-challenge-api
+    depends_on:
+      - tech-challenge-db
     build:
       context: .
       dockerfile: Dockerfile
     restart: unless-stopped
     container_name: tech-challenge-api
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://tech-challenge-db:5432/burger-store
+      - SPRING_FLYWAY_URL=jdbc:postgresql://tech-challenge-db:5432/burger-store
     ports:
       - "8080:8080"
+    networks:
+      - tech-challenge-network
+
+  tech-challenge-db:
+    image: postgres:14.2
+    environment:
+      POSTGRES_USER: burger-user
+      POSTGRES_PASSWORD: burger-password
+      POSTGRES_DB: burger-store
     networks:
       - tech-challenge-network
