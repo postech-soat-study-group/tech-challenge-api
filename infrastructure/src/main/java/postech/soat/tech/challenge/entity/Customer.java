@@ -13,20 +13,20 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Entity(name = "cliente")
-public class Cliente {
+@Entity(name = "customer")
+public class Customer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "cliente_id_seq")
-    @SequenceGenerator(name = "cliente_id_seq", sequenceName = "cliente_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "customer_id_seq")
+    @SequenceGenerator(name = "customer_id_seq", sequenceName = "customer_id_seq", allocationSize = 1)
     private long id;
     @Column
     private String cpf;
     @Column
-    private String nome;
+    private String name;
     @Column
     private String email;
     @Column
-    private String telefone;
+    private String phone;
 
 }

@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import postech.soat.tech.challenge.api.response.ApiResponse;
-import postech.soat.tech.challenge.entity.Cliente;
-import postech.soat.tech.challenge.repository.ClienteRepository;
+import postech.soat.tech.challenge.entity.Customer;
+import postech.soat.tech.challenge.repository.CustomerRepository;
 
 @RestController
 @RequestMapping("/api/sample")
@@ -18,7 +18,7 @@ import postech.soat.tech.challenge.repository.ClienteRepository;
 public class SampleController {
 
 
-    private final ClienteRepository clienteRepository;
+    private final CustomerRepository customerRepository;
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
@@ -26,8 +26,8 @@ public class SampleController {
         return new ApiResponse<>("Hello, World!");
     }
 
-    @PostMapping("/cliente")
-    public ApiResponse<Cliente> inserirCliente(@RequestBody Cliente cliente) {
-        return new ApiResponse<>(clienteRepository.save(cliente));
+    @PostMapping("/customer")
+    public ApiResponse<Customer> inserirCliente(@RequestBody Customer customer) {
+        return new ApiResponse<>(customerRepository.save(customer));
     }
 }
