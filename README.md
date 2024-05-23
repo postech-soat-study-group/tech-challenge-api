@@ -37,6 +37,11 @@ Just run the following command:
 docker-compose up --build
 ```
 
+To create a postgres database locally for testing purpose, you can run the following command:
+```bash
+docker run --name postgres-burger-store -p 5432:5432 -e POSTGRES_USER=burger-user -e POSTGRES_PASSWORD=burger-password -e POSTGRES_DB=burger-store -d postgres:14.2
+```
+
 :warning: The first build is always slower than the subsequent ones. This is because there is no local cache to speed up the process.
 ## Documentation
 The Open API 3 documentation is available at `v3/api-docs` and the Swagger interface at the `/swagger-ui.html` endpoint. 
