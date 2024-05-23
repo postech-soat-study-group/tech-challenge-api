@@ -26,7 +26,7 @@ public class ProductController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ApiResponse<Product> createProduto(@RequestBody ProductDTO productDTO) {
-        Product createdProduct = createProductUseCase.createProduto(ProdutoMapper.INSTANCE.toNewProduto(productDTO));
+        Product createdProduct = createProductUseCase.createProduct(ProdutoMapper.INSTANCE.toNewProduto(productDTO));
         return new ApiResponse<>(createdProduct);
     }
 

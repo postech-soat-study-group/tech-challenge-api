@@ -12,7 +12,7 @@ public final class CreateProductUseCase {
     }
 
 
-    public Product createProduto(Product product) {
+    public Product createProduct(Product product) {
         return productRepository.save(product);
     }
 }
