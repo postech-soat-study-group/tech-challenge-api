@@ -2,24 +2,24 @@ package postech.soat.tech.challenge.api.request;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
-import postech.soat.tech.challenge.pedido.model.Produto;
+import postech.soat.tech.challenge.pedido.model.Product;
 
-import java.util.UUID;
+import java.util.Random;
 
 @Mapper
 public interface ProdutoMapper {
 
     ProdutoMapper INSTANCE = Mappers.getMapper(ProdutoMapper.class);
 
-    default ProdutoDTO toProdutoDTO(Produto produto) {
-        return new ProdutoDTO(produto.getId(), produto.getNome(), produto.getDescricao(), produto.getPreco(), produto.getQuantidade());
+    default ProductDTO toProdutoDTO(Product product) {
+        return new ProductDTO(product.getId(), product.getName(), product.getDescription(), product.getPrice(), product.getQuantity());
     }
 
-    default Produto toProduto(ProdutoDTO produtoDTO) {
-        return new Produto(produtoDTO.getId(), produtoDTO.getNome(), produtoDTO.getDescricao(), produtoDTO.getPreco(), produtoDTO.getQuantidade());
+    default Product toProduto(ProductDTO productDTO) {
+        return new Product(productDTO.getId(), productDTO.getName(), productDTO.getDescription(), productDTO.getPrice(), productDTO.getQuantity());
     }
 
-    default Produto toNewProduto(ProdutoDTO produtoDTO) {
-        return new Produto(UUID.randomUUID(), produtoDTO.getNome(), produtoDTO.getDescricao(), produtoDTO.getPreco(), produtoDTO.getQuantidade());
+    default Product toNewProduto(ProductDTO productDTO) {
+        return new Product(new Random(0).nextLong(), productDTO.getName(), productDTO.getDescription(), productDTO.getPrice(), productDTO.getQuantity());
     }
 }
