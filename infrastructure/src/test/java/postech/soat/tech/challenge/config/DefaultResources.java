@@ -14,7 +14,7 @@ import org.testcontainers.containers.PostgreSQLContainer;
 public class DefaultResources {
 
     static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(
-            "postgres:14.2"
+            "postgres:16.3"
     );
 
     @BeforeAll

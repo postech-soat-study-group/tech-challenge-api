@@ -21,7 +21,7 @@ services:
       - tech-challenge-network
 
   tech-challenge-db:
-    image: postgres:14.2
+    image: postgres:16.3
     environment:
       POSTGRES_USER: burger-user
       POSTGRES_PASSWORD: burger-password
