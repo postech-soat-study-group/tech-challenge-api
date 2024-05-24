@@ -1,6 +1,6 @@
-package postech.soat.tech.challenge.produto.port.output;
+package postech.soat.tech.challenge.port.output;
 
-import postech.soat.tech.challenge.pedido.model.Product;
+import postech.soat.tech.challenge.model.Product;
 
 import java.util.List;
 

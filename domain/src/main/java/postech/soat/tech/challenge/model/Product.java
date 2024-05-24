@@ -1,4 +1,4 @@
-package postech.soat.tech.challenge.pedido.model;
+package postech.soat.tech.challenge.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,7 +7,7 @@ import lombok.Getter;
 @Getter
 public class Product {
 
-    private long id;
+    private Long id;
     private String name;
     private String description;
     private double price;

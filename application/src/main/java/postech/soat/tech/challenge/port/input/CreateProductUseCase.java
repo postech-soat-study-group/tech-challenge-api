@@ -1,7 +1,7 @@
-package postech.soat.tech.challenge.produto.port.input;
+package postech.soat.tech.challenge.port.input;
 
-import postech.soat.tech.challenge.pedido.model.Product;
-import postech.soat.tech.challenge.produto.port.output.ProductRepository;
+import postech.soat.tech.challenge.model.Product;
+import postech.soat.tech.challenge.port.output.ProductRepository;
 
 public final class CreateProductUseCase {
 

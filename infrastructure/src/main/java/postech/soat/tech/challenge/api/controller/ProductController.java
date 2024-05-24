@@ -3,11 +3,11 @@ package postech.soat.tech.challenge.api.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import postech.soat.tech.challenge.api.request.ProductDTO;
-import postech.soat.tech.challenge.api.request.ProdutoMapper;
+import postech.soat.tech.challenge.api.request.ProductRequestMapper;
 import postech.soat.tech.challenge.api.response.ApiResponse;
-import postech.soat.tech.challenge.pedido.model.Product;
-import postech.soat.tech.challenge.produto.port.input.CreateProductUseCase;
-import postech.soat.tech.challenge.produto.port.input.FindProductUseCase;
+import postech.soat.tech.challenge.model.Product;
+import postech.soat.tech.challenge.port.input.CreateProductUseCase;
+import postech.soat.tech.challenge.port.input.FindProductUseCase;
 
 import java.util.List;
 
@@ -26,7 +26,7 @@ public class ProductController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ApiResponse<Product> createProduto(@RequestBody ProductDTO productDTO) {
-        Product createdProduct = createProductUseCase.createProduct(ProdutoMapper.INSTANCE.toNewProduto(productDTO));
+        Product createdProduct = createProductUseCase.createProduct(ProductRequestMapper.INSTANCE.toNewProduct(productDTO));
         return new ApiResponse<>(createdProduct);
     }
 
