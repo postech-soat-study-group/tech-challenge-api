@@ -1,4 +1,5 @@
 dependencies {
+    implementation project(path: ':domain')
     compileOnly 'org.projectlombok:lombok:1.18.32'
     annotationProcessor 'org.projectlombok:lombok:1.18.32'
 }
