@@ -19,15 +19,15 @@ public class JpaProductRepositoryAdapter implements ProductRepository {
 
     @Override
     public Product save(Product product) {
-        ProductEntity productEntity = ProductEntityMapper.INSTANCE.toProductEntity(product);
+        ProductEntity productEntity = ProductEntity.toProductEntity(product);
         jpaProductRepository.save(productEntity);
-        return ProductEntityMapper.INSTANCE.toProduct(productEntity);
+        return ProductEntity.toProduct(productEntity);
     }
 
     @Override
     public List<Product> findAll() {
         return StreamSupport.stream(jpaProductRepository.findAll().spliterator(), false)
-                .map(ProductEntityMapper.INSTANCE::toProduct)
+                .map(ProductEntity::toProduct)
                 .toList();
     }
 }
