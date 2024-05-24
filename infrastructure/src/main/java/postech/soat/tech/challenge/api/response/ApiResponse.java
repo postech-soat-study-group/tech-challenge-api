@@ -1,6 +1,7 @@
 package postech.soat.tech.challenge.api.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
@@ -8,6 +9,7 @@ import java.util.List;
 
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@AllArgsConstructor
 public class ApiResponse<T> {
     private final ResponseStatus status;
     private final T data;
