@@ -8,6 +8,7 @@ COPY gradle gradle
 COPY settings.gradle .
 COPY build.gradle .
 
+COPY application/build.gradle application/
 COPY domain/build.gradle domain/
 COPY infrastructure/build.gradle infrastructure/
 
@@ -17,7 +18,7 @@ RUN ./gradlew downloadDependencies
 COPY domain/src domain/src
 COPY infrastructure/src infrastructure/src
 
-RUN ./gradlew clean build
+RUN ./gradlew clean build -x test
 
 # Stage 2: Run
 FROM amazoncorretto:21-alpine-jdk

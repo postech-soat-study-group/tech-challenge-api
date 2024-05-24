@@ -9,8 +9,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import postech.soat.tech.challenge.api.response.ApiResponse;
-import postech.soat.tech.challenge.entity.Customer;
-import postech.soat.tech.challenge.repository.CustomerRepository;
+import postech.soat.tech.challenge.persistence.entity.Customer;
+import postech.soat.tech.challenge.persistence.repository.CustomerRepository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/sample")
@@ -27,7 +30,14 @@ public class SampleController {
     }
 
     @PostMapping("/customer")
-    public ApiResponse<Customer> inserirCliente(@RequestBody Customer customer) {
+    public ApiResponse<Customer> addCustomer(@RequestBody Customer customer) {
         return new ApiResponse<>(customerRepository.save(customer));
+    }
+
+    @GetMapping("/customer/all")
+    public ApiResponse<List<Customer>> listCustomers() {
+        List<Customer> customers = new ArrayList<>();
+        customerRepository.findAll().forEach(customers::add);
+        return new ApiResponse<>(customers);
     }
 }

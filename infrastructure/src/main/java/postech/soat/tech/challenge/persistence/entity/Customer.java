@@ -1,4 +1,4 @@
-package postech.soat.tech.challenge.entity;
+package postech.soat.tech.challenge.persistence.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
