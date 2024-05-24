@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import postech.soat.tech.challenge.api.response.ApiResponse;
-import postech.soat.tech.challenge.entity.Customer;
-import postech.soat.tech.challenge.repository.CustomerRepository;
+import postech.soat.tech.challenge.persistence.entity.Customer;
+import postech.soat.tech.challenge.persistence.repository.CustomerRepository;
 
 import java.util.ArrayList;
 import java.util.List;

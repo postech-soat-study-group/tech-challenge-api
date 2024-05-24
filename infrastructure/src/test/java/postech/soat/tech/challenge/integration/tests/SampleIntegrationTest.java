@@ -6,7 +6,7 @@ import io.restassured.http.ContentType;
 import org.junit.jupiter.api.Test;
 import postech.soat.tech.challenge.api.response.ApiResponse;
 import postech.soat.tech.challenge.config.DefaultResources;
-import postech.soat.tech.challenge.entity.Customer;
+import postech.soat.tech.challenge.persistence.entity.Customer;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
