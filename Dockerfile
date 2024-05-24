@@ -8,6 +8,7 @@ COPY gradle gradle
 COPY settings.gradle .
 COPY build.gradle .
 
+COPY application/build.gradle application/
 COPY domain/build.gradle domain/
 COPY infrastructure/build.gradle infrastructure/
 
