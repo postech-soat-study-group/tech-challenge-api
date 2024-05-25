@@ -7,12 +7,9 @@ import postech.soat.tech.challenge.model.Product;
 import java.math.BigDecimal;
 
 @Getter
-public class ComboItem {
+public record ComboItem(Product product, int quantity) {
     public static final int MIN_QUANTITY_ALLOWED = 1;
     public static final int MAX_QUANTITY_ALLOWED = 99;
-
-    private Product product;
-    private int quantity;
 
     public ComboItem(Product product, int quantity) {
         this.product = product;
@@ -28,7 +25,7 @@ public class ComboItem {
         var className = this.getClass().getSimpleName();
 
         if (product == null) {
-            throw new InvalidModelException(className, "Product cannot be null");
+            throw new InvalidModelException(className, "A ComboItem cannot exist without a product");
         }
 
         if (quantity < MIN_QUANTITY_ALLOWED) {
