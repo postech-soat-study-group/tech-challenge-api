@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import postech.soat.tech.challenge.model.Category;
 import postech.soat.tech.challenge.model.Product;
 
 @AllArgsConstructor
@@ -24,12 +25,14 @@ public class ProductEntity {
     private double price;
     @Column
     private int quantity;
+    @Column
+    private String category;
 
     public static ProductEntity toProductEntity(Product product) {
-        return new ProductEntity(product.getId(), product.getName(), product.getDescription(), product.getPrice(), product.getQuantity());
+        return new ProductEntity(product.getId(), product.getName(), product.getDescription(), product.getPrice(), product.getQuantity(), product.getCategory().name());
     }
 
     public static Product toProduct(ProductEntity productEntity) {
-        return new Product(productEntity.getId(), productEntity.getName(), productEntity.getDescription(), productEntity.getPrice(), productEntity.getQuantity());
+        return new Product(productEntity.getId(), productEntity.getName(), productEntity.getDescription(), productEntity.getPrice(), productEntity.getQuantity(), Category.valueOf(productEntity.getCategory()));
     }
 }

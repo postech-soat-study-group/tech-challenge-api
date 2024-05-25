@@ -7,14 +7,15 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import postech.soat.tech.challenge.persistence.repository.JpaProductRepository;
 import postech.soat.tech.challenge.persistence.repository.JpaProductRepositoryAdapter;
 import postech.soat.tech.challenge.port.input.CreateProductUseCase;
+import postech.soat.tech.challenge.port.input.DeleteProductUseCase;
 import postech.soat.tech.challenge.port.input.FindProductUseCase;
+import postech.soat.tech.challenge.port.input.UpdateProductUseCase;
 import postech.soat.tech.challenge.port.output.ProductRepository;
 
 @Configuration
 @EnableJpaRepositories(basePackages = "postech.soat.tech.challenge.persistence.repository")
 public class UseCaseConfig {
 
-    @Autowired
     JpaProductRepository jpaProductRepository;
     ProductRepository productRepository;
 
@@ -33,4 +34,15 @@ public class UseCaseConfig {
     public FindProductUseCase findProductUseCase() {
         return new FindProductUseCase(productRepository);
     }
+
+    @Bean
+    public UpdateProductUseCase updateProductUseCase() {
+        return new UpdateProductUseCase(productRepository);
+    }
+
+    @Bean
+    public DeleteProductUseCase deleteProductUseCase() {
+        return new DeleteProductUseCase(productRepository);
+    }
+
 }

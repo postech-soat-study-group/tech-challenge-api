@@ -2,6 +2,7 @@ package postech.soat.tech.challenge.api.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import postech.soat.tech.challenge.model.Category;
 import postech.soat.tech.challenge.model.Product;
 
 import java.util.List;
@@ -14,9 +15,10 @@ public class ProductDTO {
     private String description;
     private double price;
     private int quantity;
+    private String category;
 
     public static Product toNewProduct(ProductDTO productDTO) {
-        return new Product(null, productDTO.getName(), productDTO.getDescription(), productDTO.getPrice(), productDTO.getQuantity());
+        return new Product(null, productDTO.getName(), productDTO.getDescription(), productDTO.getPrice(), productDTO.getQuantity(), Category.valueOf(productDTO.getCategory()));
     }
 
     public static List<ProductDTO> toProductDTOList(List<Product> products) {
@@ -24,6 +26,10 @@ public class ProductDTO {
     }
 
     public static ProductDTO toProductDTO(Product product) {
-        return new ProductDTO(product.getId(), product.getName(), product.getDescription(), product.getPrice(), product.getQuantity());
+        return new ProductDTO(product.getId(), product.getName(), product.getDescription(), product.getPrice(), product.getQuantity(), product.getCategory().name());
+    }
+
+    public static Product toProduct(ProductDTO productDTO) {
+        return new Product(productDTO.getId(), productDTO.getName(), productDTO.getDescription(), productDTO.getPrice(), productDTO.getQuantity(), Category.valueOf(productDTO.getCategory()));
     }
 }
