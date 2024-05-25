@@ -16,6 +16,13 @@ public class ApiResponse<T> {
     private final List<ApiErrorResponse> errors;
     private final LocalDateTime timestamp;
 
+    public ApiResponse() {
+        this.status = ResponseStatus.SUCCESS;
+        this.timestamp = LocalDateTime.now();
+        this.data = null;
+        this.errors = null;
+    }
+
     public ApiResponse(T data) {
         this.status = ResponseStatus.SUCCESS;
         this.timestamp = LocalDateTime.now();
