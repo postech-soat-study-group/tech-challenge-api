@@ -27,12 +27,12 @@ public record ComboItem(Product product, int quantity) {
         }
 
         if (quantity < MIN_QUANTITY_ALLOWED) {
-            var errorMessage = "Quantity must be greater than %s".formatted(MIN_QUANTITY_ALLOWED);
+            var errorMessage = "Quantity must be greater than or equal to %s".formatted(MIN_QUANTITY_ALLOWED);
             throw new InvalidModelException(className, errorMessage);
         }
 
         if (quantity > MAX_QUANTITY_ALLOWED) {
-            var errorMessage = "Quantity must be less than %s".formatted(MAX_QUANTITY_ALLOWED);
+            var errorMessage = "Quantity must be less than or equal to %s".formatted(MAX_QUANTITY_ALLOWED);
             throw new InvalidModelException(className, errorMessage);
         }
     }

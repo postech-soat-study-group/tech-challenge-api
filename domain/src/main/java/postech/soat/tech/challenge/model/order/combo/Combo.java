@@ -19,5 +19,5 @@ public class Combo {
     public BigDecimal calculateValue() {
         return this.items.stream().reduce(BigDecimal.ZERO, (total, item) -> total.add(item.calculateValue()), BigDecimal::add);
     }
-    // TODO: implement validation for the number of products in each category once the products PR is merged
+
 }
