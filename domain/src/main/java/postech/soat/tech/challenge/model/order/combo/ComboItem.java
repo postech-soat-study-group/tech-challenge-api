@@ -1,6 +1,7 @@
 package postech.soat.tech.challenge.model.order.combo;
 
 import lombok.Getter;
+import postech.soat.tech.challenge.model.InvalidModelException;
 import postech.soat.tech.challenge.model.Product;
 
 import java.math.BigDecimal;
@@ -24,16 +25,20 @@ public class ComboItem {
     }
 
     private void validate() {
+        var className = this.getClass().getSimpleName();
+
         if (product == null) {
-            throw new IllegalArgumentException("Product cannot be null");
+            throw new InvalidModelException(className, "Product cannot be null");
         }
 
         if (quantity < MIN_QUANTITY_ALLOWED) {
-            throw new IllegalArgumentException("Quantity must be greater than %s".formatted(MIN_QUANTITY_ALLOWED));
+            var errorMessage = "Quantity must be greater than %s".formatted(MIN_QUANTITY_ALLOWED);
+            throw new InvalidModelException(className, errorMessage);
         }
 
         if (quantity > MAX_QUANTITY_ALLOWED) {
-            throw new IllegalArgumentException("Quantity must be less than %s".formatted(MAX_QUANTITY_ALLOWED));
+            var errorMessage = "Quantity must be less than %s".formatted(MAX_QUANTITY_ALLOWED);
+            throw new InvalidModelException(className, errorMessage);
         }
     }
 }
