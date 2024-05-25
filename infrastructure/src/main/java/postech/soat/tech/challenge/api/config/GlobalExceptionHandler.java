@@ -19,7 +19,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ApiResponse handleValidationExceptions(RuntimeException ex) {
         logger.severe(ex.getMessage());
-        var errorList = List.of(new ApiErrorResponse("An unknown error occurred."));
+        var errorList = List.of(new ApiErrorResponse("An unknown error occurred." + ex.getMessage()));
 
         return new ApiResponse<>(errorList);
     }

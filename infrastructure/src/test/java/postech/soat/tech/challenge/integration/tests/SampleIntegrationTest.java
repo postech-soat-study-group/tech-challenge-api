@@ -6,7 +6,7 @@ import io.restassured.http.ContentType;
 import org.junit.jupiter.api.Test;
 import postech.soat.tech.challenge.api.response.ApiResponse;
 import postech.soat.tech.challenge.config.DefaultResources;
-import postech.soat.tech.challenge.persistence.entity.Customer;
+import postech.soat.tech.challenge.persistence.entity.CustomerEntity;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
@@ -16,10 +16,10 @@ public class SampleIntegrationTest extends DefaultResources {
 
     @Test
     void shouldGetAllCustomers() {
-        TypeRef<ApiResponse<Customer>> typeReference = new TypeRef<>() {};
-        Customer createdCustomer = given()
+        TypeRef<ApiResponse<CustomerEntity>> typeReference = new TypeRef<>() {};
+        CustomerEntity createdCustomer = given()
                 .contentType(ContentType.JSON)
-                .body(new Customer(0, "1111111", "John Doe", "email@email.com", "123456"))
+                .body(new CustomerEntity(0, "1111111", "John Doe", "email@email.com", "123456"))
                 .when()
                 .post("/api/sample/customer")
                 .then()
