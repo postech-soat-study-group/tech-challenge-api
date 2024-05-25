@@ -4,7 +4,6 @@ create table product (
     description varchar(255) null,
     price double precision not null,
     quantity integer not null,
-    category varchar(20) null,
     created_at timestamp not null default current_timestamp,
     updated_at timestamp not null default current_timestamp
 );
