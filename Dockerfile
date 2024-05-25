@@ -15,6 +15,7 @@ COPY infrastructure/build.gradle infrastructure/
 RUN chmod +x ./gradlew
 RUN ./gradlew downloadDependencies
 
+COPY application/src application/src
 COPY domain/src domain/src
 COPY infrastructure/src infrastructure/src
 
