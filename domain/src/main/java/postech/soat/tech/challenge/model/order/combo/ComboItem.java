@@ -7,6 +7,9 @@ import java.math.BigDecimal;
 
 @Getter
 public class ComboItem {
+    public static final int MIN_QUANTITY_ALLOWED = 1;
+    public static final int MAX_QUANTITY_ALLOWED = 99;
+
     private Product product;
     private int quantity;
 
@@ -24,8 +27,13 @@ public class ComboItem {
         if (product == null) {
             throw new IllegalArgumentException("Product cannot be null");
         }
-        if (quantity <= 0 || quantity >= 99) {
-            throw new IllegalArgumentException("Quantity must be greater than 0");
+
+        if (quantity < MIN_QUANTITY_ALLOWED) {
+            throw new IllegalArgumentException("Quantity must be greater than %s".formatted(MIN_QUANTITY_ALLOWED));
+        }
+
+        if (quantity > MAX_QUANTITY_ALLOWED) {
+            throw new IllegalArgumentException("Quantity must be less than %s".formatted(MAX_QUANTITY_ALLOWED));
         }
     }
 }
