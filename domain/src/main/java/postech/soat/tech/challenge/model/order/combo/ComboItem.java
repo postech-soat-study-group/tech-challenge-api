@@ -1,12 +1,10 @@
 package postech.soat.tech.challenge.model.order.combo;
 
-import lombok.Getter;
 import postech.soat.tech.challenge.model.InvalidModelException;
 import postech.soat.tech.challenge.model.Product;
 
 import java.math.BigDecimal;
 
-@Getter
 public record ComboItem(Product product, int quantity) {
     public static final int MIN_QUANTITY_ALLOWED = 1;
     public static final int MAX_QUANTITY_ALLOWED = 99;
