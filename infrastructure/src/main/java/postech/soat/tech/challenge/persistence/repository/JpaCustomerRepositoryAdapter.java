@@ -23,12 +23,14 @@ public class JpaCustomerRepositoryAdapter implements CustomerRepository {
 
     @Override
     public Customer save(Customer customer) {
-        Optional<CustomerEntity> optExistingCustomer = jpaCustomerRepository.getByCpf(customer.getCpf());
-        if(optExistingCustomer.isPresent()) {
-            throw new IllegalArgumentException("Customer already exists");
-        }
         CustomerEntity customerEntity = CustomerEntity.toCustomerEntity(customer);
         customerEntity = jpaCustomerRepository.save(customerEntity);
         return CustomerEntity.toCustomer(customerEntity);
+    }
+
+    @Override
+    public Optional<Customer> findByCpf(String cpf) {
+        Optional<CustomerEntity> optCustomerEntity = jpaCustomerRepository.findByCpf(cpf);
+        return optCustomerEntity.map(CustomerEntity::toCustomer);
     }
 }

@@ -6,5 +6,5 @@ import postech.soat.tech.challenge.persistence.entity.CustomerEntity;
 import java.util.Optional;
 
 public interface JpaCustomerRepository extends CrudRepository<CustomerEntity, Long> {
-    Optional<CustomerEntity> getByCpf(String cpf);
+    Optional<CustomerEntity> findByCpf(String cpf);
 }
