@@ -8,6 +8,8 @@ import postech.soat.tech.challenge.model.Category;
 import postech.soat.tech.challenge.model.InvalidModelException;
 import postech.soat.tech.challenge.model.Product;
 
+import java.math.BigDecimal;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ComboItemTest {
@@ -16,7 +18,7 @@ class ComboItemTest {
 
     @BeforeEach
     void setup() {
-        fakeProduct = new Product(1L, "Product",  "description", 1.0,  1,  Category.BEVERAGE);
+        fakeProduct = new Product(1L, "Product",  "description", BigDecimal.ONE,  1,  Category.BEVERAGE);
     }
 
     @Test
@@ -58,5 +60,15 @@ class ComboItemTest {
 
         assertEquals(fakeProduct, comboItem.product());
         assertEquals(quantity, comboItem.quantity());
+    }
+
+    @Test
+    public void whenCalculateValue_thenReturnProductPriceTimesQuantity() {
+        var quantity = 10;
+        var comboItem = new ComboItem(fakeProduct, quantity);
+
+        var expected = BigDecimal.valueOf(quantity).multiply(fakeProduct.getPrice());
+
+        assertEquals(expected, comboItem.calculateValue());
     }
 }

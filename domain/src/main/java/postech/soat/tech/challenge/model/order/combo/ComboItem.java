@@ -16,7 +16,7 @@ public record ComboItem(Product product, int quantity) {
     }
 
     public BigDecimal calculateValue() {
-        return BigDecimal.valueOf(product.getPrice() * quantity);
+        return BigDecimal.valueOf(quantity).multiply(product.getPrice());
     }
 
     private void validate() {
