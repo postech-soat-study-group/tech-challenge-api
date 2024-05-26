@@ -11,7 +11,6 @@ public final class CreateProductUseCase {
         this.productRepository = productRepository;
     }
 
-
     public Product createProduct(Product product) {
         return productRepository.save(product);
     }

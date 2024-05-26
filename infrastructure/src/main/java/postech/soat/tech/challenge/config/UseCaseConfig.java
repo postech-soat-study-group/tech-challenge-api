@@ -9,14 +9,15 @@ import postech.soat.tech.challenge.persistence.repository.JpaProductRepository;
 import postech.soat.tech.challenge.persistence.repository.JpaProductRepositoryAdapter;
 import postech.soat.tech.challenge.port.input.CreateCustomerUseCase;
 import postech.soat.tech.challenge.port.input.CreateProductUseCase;
+import postech.soat.tech.challenge.port.input.DeleteProductUseCase;
 import postech.soat.tech.challenge.port.input.FindProductUseCase;
 import postech.soat.tech.challenge.port.output.CustomerRepository;
+import postech.soat.tech.challenge.port.input.UpdateProductUseCase;
 import postech.soat.tech.challenge.port.output.ProductRepository;
 
 @Configuration
 @EnableJpaRepositories(basePackages = "postech.soat.tech.challenge.persistence.repository")
 public class UseCaseConfig {
-
 
     private final ProductRepository productRepository;
     private final CustomerRepository customerRepository;
@@ -38,6 +39,17 @@ public class UseCaseConfig {
     public FindProductUseCase findProductUseCase() {
         return new FindProductUseCase(productRepository);
     }
+
+    @Bean
+    public UpdateProductUseCase updateProductUseCase() {
+        return new UpdateProductUseCase(productRepository);
+    }
+
+    @Bean
+    public DeleteProductUseCase deleteProductUseCase() {
+        return new DeleteProductUseCase(productRepository);
+    }
+
 
     @Bean
     public CreateCustomerUseCase createCustomerUseCase() {
