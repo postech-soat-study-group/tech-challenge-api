@@ -10,4 +10,6 @@ public interface ProductRepository {
     List<Product> findAll();
 
     void delete(Long id);
+
+    List<Product> findAllByCategory(String category);
 }

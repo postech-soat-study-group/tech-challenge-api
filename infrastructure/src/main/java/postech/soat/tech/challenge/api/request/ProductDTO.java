@@ -15,7 +15,7 @@ public class ProductDTO {
     private String name;
     private String description;
     private BigDecimal price;
-    private int quantity;
+    private Integer quantity;
     private String category;
     private int timeToPrepareMinutes;
 

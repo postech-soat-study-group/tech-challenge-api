@@ -16,4 +16,8 @@ public final class FindProductUseCase {
     public List<Product> findProducts() {
         return productRepository.findAll();
     }
+
+    public List<Product> findProductsByCategory(String category) {
+        return productRepository.findAllByCategory(category);
+    }
 }
