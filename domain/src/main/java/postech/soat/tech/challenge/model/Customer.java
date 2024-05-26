@@ -4,6 +4,7 @@ package postech.soat.tech.challenge.model;
 import lombok.Getter;
 import postech.soat.tech.challenge.validation.DomainInvalidException;
 import postech.soat.tech.challenge.validation.DomainValidationResult;
+import postech.soat.tech.challenge.validation.validator.CPFValidator;
 
 @Getter
 public class Customer {
@@ -24,7 +25,7 @@ public class Customer {
         DomainValidationResult validationResult = validate(name, cpf, email, phone);
 
         if(!validationResult.isValid()) {
-            throw new DomainInvalidException(this.getClass(), validationResult.getErrorsMessage());
+            throw new DomainInvalidException(validationResult.getErrors(), validationResult.getErrorsMessage());
         }
 
         this.id = id;
@@ -42,13 +43,15 @@ public class Customer {
     ) {
 
         DomainValidationResult domainValidationResult = new DomainValidationResult();
-        if(name == null || name.isEmpty()) {
+        if (name == null || name.isEmpty()) {
             domainValidationResult.addError("Name is required");
         }
-        if(cpf == null || cpf.isEmpty()) {
-            domainValidationResult.addError("CPF is required");
+
+        if (cpf == null || cpf.isEmpty() || !CPFValidator.isValidCPF(cpf)) {
+            domainValidationResult.addError("CPF is empty or invalid.");
         }
-        if((email == null || email.isEmpty()) && (phone == null || phone.isEmpty())) {
+
+        if ((email == null || email.isEmpty()) && (phone == null || phone.isEmpty())) {
             domainValidationResult.addError("E-mail or Phone is required.");
         }
 

@@ -35,7 +35,7 @@ public class CustomerEntity {
     }
 
     public static Customer toCustomer(CustomerEntity customerEntity) {
-        return new Customer(customerEntity.getId(), customerEntity.getCpf(), customerEntity.getName(), customerEntity.getEmail(), customerEntity.getPhone());
+        return new Customer(customerEntity.getId(), customerEntity.getName(), customerEntity.getCpf(), customerEntity.getEmail(), customerEntity.getPhone());
     }
 
 }

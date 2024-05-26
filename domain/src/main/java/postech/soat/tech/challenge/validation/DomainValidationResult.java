@@ -1,5 +1,6 @@
 package postech.soat.tech.challenge.validation;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.List;
 
 @NoArgsConstructor
 public class DomainValidationResult {
+    @Getter
     private final List<String> errors = new ArrayList<>();
 
     public boolean isValid() {
