@@ -2,6 +2,8 @@ package postech.soat.tech.challenge.model.order.combo;
 
 import postech.soat.tech.challenge.model.InvalidModelException;
 import postech.soat.tech.challenge.model.Product;
+import postech.soat.tech.challenge.validation.DomainInvalidException;
+import postech.soat.tech.challenge.validation.DomainValidationResult;
 
 import java.math.BigDecimal;
 
@@ -24,20 +26,24 @@ public record ComboItem(Product product, int quantity) {
     }
 
     private void validate() {
-        var className = this.getClass().getSimpleName();
+        var domainValidationResult = new DomainValidationResult();
 
         if (product == null) {
-            throw new InvalidModelException(className, "A ComboItem cannot exist without a product");
+            domainValidationResult.addError("A ComboItem cannot exist without a product");
         }
 
         if (quantity < MIN_QUANTITY_ALLOWED) {
             var errorMessage = "Quantity must be greater than or equal to %s".formatted(MIN_QUANTITY_ALLOWED);
-            throw new InvalidModelException(className, errorMessage);
+            domainValidationResult.addError(errorMessage);
         }
 
         if (quantity > MAX_QUANTITY_ALLOWED) {
             var errorMessage = "Quantity must be less than or equal to %s".formatted(MAX_QUANTITY_ALLOWED);
-            throw new InvalidModelException(className, errorMessage);
+            domainValidationResult.addError(errorMessage);
+        }
+
+        if(!domainValidationResult.isValid()) {
+            throw new DomainInvalidException(domainValidationResult.getErrors(), domainValidationResult.getErrorsMessage());
         }
     }
 }

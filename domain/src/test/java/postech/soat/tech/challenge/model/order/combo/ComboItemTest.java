@@ -7,6 +7,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import postech.soat.tech.challenge.model.Category;
 import postech.soat.tech.challenge.model.InvalidModelException;
 import postech.soat.tech.challenge.model.Product;
+import postech.soat.tech.challenge.validation.DomainInvalidException;
 
 import java.math.BigDecimal;
 
@@ -30,10 +31,10 @@ class ComboItemTest {
 
     @Test
     public void whenProductIsNull_thenThrowInvalidModelException() {
-        var exception = assertThrows(InvalidModelException.class, () -> new ComboItem(null, 1));
+        var exception = assertThrows(DomainInvalidException.class, () -> new ComboItem(null, 1));
 
         assertEquals(
-                "Invalid property on ComboItem: A ComboItem cannot exist without a product",
+                "A ComboItem cannot exist without a product",
                 exception.getMessage()
         );
     }
@@ -41,10 +42,10 @@ class ComboItemTest {
     @ParameterizedTest
     @ValueSource(ints = { -1000, -1, 0 })
     public void whenQuantityIsSmallerThanMinimum_thenThrowInvalidModelException(int invalidMinQuantity) {
-        var exception = assertThrows(InvalidModelException.class, () -> new ComboItem(fakeProduct, invalidMinQuantity));
+        var exception = assertThrows(DomainInvalidException.class, () -> new ComboItem(fakeProduct, invalidMinQuantity));
 
         assertEquals(
-                "Invalid property on ComboItem: Quantity must be greater than or equal to 1",
+                "Quantity must be greater than or equal to 1",
                 exception.getMessage()
         );
     }
@@ -52,10 +53,10 @@ class ComboItemTest {
     @ParameterizedTest
     @ValueSource(ints = { 100, 101, 999999 })
     public void whenQuantityIsGreaterThanMaximum_thenThrowInvalidModelException(int invalidMaxQuantity) {
-        var exception = assertThrows(InvalidModelException.class, () -> new ComboItem(fakeProduct, invalidMaxQuantity));
+        var exception = assertThrows(DomainInvalidException.class, () -> new ComboItem(fakeProduct, invalidMaxQuantity));
 
         assertEquals(
-                "Invalid property on ComboItem: Quantity must be less than or equal to 99",
+                "Quantity must be less than or equal to 99",
                 exception.getMessage()
         );
     }
