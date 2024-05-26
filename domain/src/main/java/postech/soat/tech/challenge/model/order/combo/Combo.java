@@ -26,7 +26,17 @@ public class Combo {
     }
 
     public BigDecimal calculateValue() {
-        return this.items.stream().reduce(BigDecimal.ZERO, (total, item) -> total.add(item.calculateValue()), BigDecimal::add);
+        return this.items.stream()
+                .reduce(
+                        BigDecimal.ZERO,
+                        (total, item) -> total.add(item.calculateValue()), BigDecimal::add
+                );
+    }
+
+    public int calculateTimeToPrepare() {
+        return this.items.stream()
+                .map(ComboItem::calculateTimeToPrepare)
+                .reduce(0, Integer::sum);
     }
 
     private void validate() {

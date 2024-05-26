@@ -18,7 +18,14 @@ class ComboItemTest {
 
     @BeforeEach
     void setup() {
-        fakeProduct = new Product(1L, "Product",  "description", BigDecimal.ONE,  1,  Category.BEVERAGE, 1);
+        fakeProduct = new Product(
+                1L,
+                "Product",
+                "description",
+                BigDecimal.ONE,
+                1,
+                Category.BEVERAGE,
+                1);
     }
 
     @Test
@@ -70,5 +77,15 @@ class ComboItemTest {
         var expected = BigDecimal.valueOf(quantity).multiply(fakeProduct.getPrice());
 
         assertEquals(expected, comboItem.calculateValue());
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = { 1, 10, 99 })
+    public void whenCalculatingTimeToPrepare_thenReturnProductTimeToPrepareTimesQuantity(int quantity) {
+        var comboItem = new ComboItem(fakeProduct, quantity);
+
+        var expected = fakeProduct.getTimeToPrepareMinutes() * quantity;
+
+        assertEquals(expected, comboItem.calculateTimeToPrepare());
     }
 }

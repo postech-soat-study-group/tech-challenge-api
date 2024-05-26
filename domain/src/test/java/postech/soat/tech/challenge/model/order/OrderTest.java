@@ -23,7 +23,7 @@ class OrderTest {
         assertEquals(OrderStatus.RECEIVED, order.getStatus());
         assertEquals(combos.getFirst().calculateValue(), order.getValue());
         assertNull(order.getCustomerId());
-        assertEquals(0, order.getTimeEstimate());
+        assertEquals(20, order.getTimeEstimate());
     }
 
     @Test
@@ -37,7 +37,7 @@ class OrderTest {
         assertEquals(OrderStatus.RECEIVED, order.getStatus());
         assertEquals(combos.getFirst().calculateValue(), order.getValue());
         assertEquals(customerId, order.getCustomerId());
-        assertEquals(0, order.getTimeEstimate());
+        assertEquals(20, order.getTimeEstimate());
     }
 
     @Test
@@ -55,7 +55,7 @@ class OrderTest {
     }
 
     private List<Combo> getComboList() {
-        var fakeProduct = new Product(1L, "Product1",  "description", BigDecimal.ONE,  1,  Category.DESSERT, 1);
+        var fakeProduct = new Product(1L, "Product1",  "description", BigDecimal.ONE,  1,  Category.DESSERT, 20);
         var fakeComboItem = new ComboItem(fakeProduct, 1);
 
         return List.of(new Combo(List.of(fakeComboItem)));

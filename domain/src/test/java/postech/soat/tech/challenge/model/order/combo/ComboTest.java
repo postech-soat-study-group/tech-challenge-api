@@ -14,20 +14,11 @@ class ComboTest {
 
     @Test
     public void whenComboItemsAreValid_thenCreateCombo() {
-        var sandwich = new Product(1L, "Product",  "description", BigDecimal.ONE,  1,  Category.SANDWICH, 1);
-        var dessert = new Product(2L, "Product",  "description", BigDecimal.ONE,  1,  Category.DESSERT, 1);
-        var sideDish = new Product(3L, "Product",  "description", BigDecimal.ONE,  1,  Category.SIDEDISH, 1);
-        var beverage = new Product(4L, "Product",  "description", BigDecimal.ONE,  1,  Category.BEVERAGE, 1);
-
-        var sandwichItem = new ComboItem(sandwich, 1);
-        var dessertItem = new ComboItem(dessert, 1);
-        var sideDishItem = new ComboItem(sideDish, 1);
-        var beverageItem = new ComboItem(beverage, 1);
-
-        var combo = new Combo(List.of(sandwichItem, dessertItem, sideDishItem, beverageItem));
+        var combo = buildValidCombo();
 
         assertNotNull(combo);
     }
+
     @Test
     public void whenComboItemsIsNull_thenThrowInvalidModelException() {
         var exception = assertThrows(InvalidModelException.class, () -> new Combo(null));
@@ -65,6 +56,27 @@ class ComboTest {
         assertTrue(message.contains("BEVERAGE"));
         assertTrue(message.contains("DESSERT"));
         assertTrue(message.contains("Invalid property on Combo: A Combo cannot have duplicated categories: "));
+    }
+
+    @Test
+    public void whenCalculatingTimeToPrepare_thenReturnSumOfAllItemsTimeToPrepare() {
+        var combo = buildValidCombo();
+
+        assertEquals(31, combo.calculateTimeToPrepare());
+    }
+
+    private static Combo buildValidCombo() {
+        var sandwich = new Product(1L, "Product",  "description", BigDecimal.ONE,  1,  Category.SANDWICH, 1);
+        var dessert = new Product(2L, "Product",  "description", BigDecimal.ONE,  1,  Category.DESSERT, 5);
+        var sideDish = new Product(3L, "Product",  "description", BigDecimal.ONE,  1,  Category.SIDEDISH, 10);
+        var beverage = new Product(4L, "Product",  "description", BigDecimal.ONE,  1,  Category.BEVERAGE, 15);
+
+        var sandwichItem = new ComboItem(sandwich, 1);
+        var dessertItem = new ComboItem(dessert, 1);
+        var sideDishItem = new ComboItem(sideDish, 1);
+        var beverageItem = new ComboItem(beverage, 1);
+
+        return new Combo(List.of(sandwichItem, dessertItem, sideDishItem, beverageItem));
     }
 
     private static List<ComboItem> getDuplicatedComboItems(Category category1, Category category2) {

@@ -17,8 +17,7 @@ public class Order {
     private BigDecimal value;
     private Long customerId;
     private OrderStatus status;
-    // TODO: implement timeToPrepare on Products to allow this property to work
-    private float timeEstimate;
+    private int timeEstimate;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -29,6 +28,7 @@ public class Order {
 
         this.validate();
         this.calculateValue();
+        this.calculateTimeEstimate();
     }
 
     public Order(List<Combo> combos, Long clientId) {
@@ -39,6 +39,7 @@ public class Order {
 
         this.validate();
         this.calculateValue();
+        this.calculateTimeEstimate();
     }
 
     private void validate() {
@@ -50,6 +51,12 @@ public class Order {
     private void calculateValue() {
         for (Combo combo : combos) {
             this.value = this.value.add(combo.calculateValue());
+        }
+    }
+
+    private void calculateTimeEstimate() {
+        for (Combo combo : combos) {
+            this.timeEstimate += combo.calculateTimeToPrepare();
         }
     }
 }

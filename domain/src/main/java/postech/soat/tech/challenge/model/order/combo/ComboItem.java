@@ -19,6 +19,10 @@ public record ComboItem(Product product, int quantity) {
         return BigDecimal.valueOf(quantity).multiply(product.getPrice());
     }
 
+    public int calculateTimeToPrepare() {
+        return product.getTimeToPrepareMinutes() * quantity;
+    }
+
     private void validate() {
         var className = this.getClass().getSimpleName();
 
