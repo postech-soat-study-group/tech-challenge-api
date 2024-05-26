@@ -15,5 +15,5 @@ public class Product {
     private BigDecimal price;
     private int quantity;
     private Category category;
-
+    private int timeToPrepareMinutes;
 }

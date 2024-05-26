@@ -2,6 +2,7 @@ package postech.soat.tech.challenge.model.order;
 
 import org.junit.jupiter.api.Test;
 import postech.soat.tech.challenge.model.Category;
+import postech.soat.tech.challenge.model.InvalidModelException;
 import postech.soat.tech.challenge.model.Product;
 import postech.soat.tech.challenge.model.order.combo.Combo;
 import postech.soat.tech.challenge.model.order.combo.ComboItem;
@@ -22,6 +23,7 @@ class OrderTest {
         assertEquals(OrderStatus.RECEIVED, order.getStatus());
         assertEquals(combos.getFirst().calculateValue(), order.getValue());
         assertNull(order.getCustomerId());
+        assertEquals(0, order.getTimeEstimate());
     }
 
     @Test
@@ -35,10 +37,25 @@ class OrderTest {
         assertEquals(OrderStatus.RECEIVED, order.getStatus());
         assertEquals(combos.getFirst().calculateValue(), order.getValue());
         assertEquals(customerId, order.getCustomerId());
+        assertEquals(0, order.getTimeEstimate());
+    }
+
+    @Test
+    public void whenComboListIsNull_thenThrowInvalidModelException() {
+        var exception = assertThrows(InvalidModelException.class, () -> new Order(null));
+
+        assertEquals("Invalid property on Order: An order must have at least one combo", exception.getMessage());
+    }
+
+    @Test
+    public void whenComboListIsEmpty_thenThrowInvalidModelException() {
+        var exception = assertThrows(InvalidModelException.class, () -> new Order(List.of()));
+
+        assertEquals("Invalid property on Order: An order must have at least one combo", exception.getMessage());
     }
 
     private List<Combo> getComboList() {
-        var fakeProduct = new Product(1L, "Product1",  "description", BigDecimal.ONE,  1,  Category.DESSERT);
+        var fakeProduct = new Product(1L, "Product1",  "description", BigDecimal.ONE,  1,  Category.DESSERT, 1);
         var fakeComboItem = new ComboItem(fakeProduct, 1);
 
         return List.of(new Combo(List.of(fakeComboItem)));

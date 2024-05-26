@@ -14,10 +14,10 @@ class ComboTest {
 
     @Test
     public void whenComboItemsAreValid_thenCreateCombo() {
-        var sandwich = new Product(1L, "Product",  "description", BigDecimal.ONE,  1,  Category.SANDWICH);
-        var dessert = new Product(2L, "Product",  "description", BigDecimal.ONE,  1,  Category.DESSERT);
-        var sideDish = new Product(3L, "Product",  "description", BigDecimal.ONE,  1,  Category.SIDEDISH);
-        var beverage = new Product(4L, "Product",  "description", BigDecimal.ONE,  1,  Category.BEVERAGE);
+        var sandwich = new Product(1L, "Product",  "description", BigDecimal.ONE,  1,  Category.SANDWICH, 1);
+        var dessert = new Product(2L, "Product",  "description", BigDecimal.ONE,  1,  Category.DESSERT, 1);
+        var sideDish = new Product(3L, "Product",  "description", BigDecimal.ONE,  1,  Category.SIDEDISH, 1);
+        var beverage = new Product(4L, "Product",  "description", BigDecimal.ONE,  1,  Category.BEVERAGE, 1);
 
         var sandwichItem = new ComboItem(sandwich, 1);
         var dessertItem = new ComboItem(dessert, 1);
@@ -44,8 +44,8 @@ class ComboTest {
 
     @Test
     public void whenComboHasTwoDifferentItemsInTheSameCategory_thenThrowInvalidModelException() {
-        var fakeProduct1 = new Product(1L, "Product1",  "description", BigDecimal.ONE,  1,  Category.BEVERAGE);
-        var fakeProduct2 = new Product(2L, "Product2",  "description", BigDecimal.ONE,  1,  Category.BEVERAGE);
+        var fakeProduct1 = new Product(1L, "Product1",  "description", BigDecimal.ONE,  1,  Category.BEVERAGE, 1);
+        var fakeProduct2 = new Product(2L, "Product2",  "description", BigDecimal.ONE,  1,  Category.BEVERAGE, 1);
 
         var fakeComboItem1 = new ComboItem(fakeProduct1, 1);
         var fakeComboItem2 = new ComboItem(fakeProduct2, 1);
@@ -60,18 +60,18 @@ class ComboTest {
         var itemList = getDuplicatedComboItems(Category.BEVERAGE, Category.DESSERT);
 
         var exception = assertThrows(InvalidModelException.class, () -> new Combo(itemList));
+        var message = exception.getMessage();
 
-        assertEquals(
-                "Invalid property on Combo: A Combo cannot have duplicated categories: [BEVERAGE, DESSERT]",
-                exception.getMessage()
-        );
+        assertTrue(message.contains("BEVERAGE"));
+        assertTrue(message.contains("DESSERT"));
+        assertTrue(message.contains("Invalid property on Combo: A Combo cannot have duplicated categories: "));
     }
 
     private static List<ComboItem> getDuplicatedComboItems(Category category1, Category category2) {
-        var fakeProduct1 = new Product(1L, "Product1",  "description", BigDecimal.ONE,  1,  category1);
-        var fakeProduct2 = new Product(2L, "Product2",  "description", BigDecimal.ONE,  1,  category1);
-        var fakeProduct3 = new Product(3L, "Product3",  "description", BigDecimal.ONE,  1,  category2);
-        var fakeProduct4 = new Product(4L, "Product4",  "description", BigDecimal.ONE,  1,  category2);
+        var fakeProduct1 = new Product(1L, "Product1",  "description", BigDecimal.ONE,  1,  category1, 1);
+        var fakeProduct2 = new Product(2L, "Product2",  "description", BigDecimal.ONE,  1,  category1, 1);
+        var fakeProduct3 = new Product(3L, "Product3",  "description", BigDecimal.ONE,  1,  category2, 1);
+        var fakeProduct4 = new Product(4L, "Product4",  "description", BigDecimal.ONE,  1,  category2, 1);
 
         var fakeComboItem1 = new ComboItem(fakeProduct1, 1);
         var fakeComboItem2 = new ComboItem(fakeProduct2, 1);

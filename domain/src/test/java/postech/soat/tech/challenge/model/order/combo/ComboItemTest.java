@@ -18,7 +18,7 @@ class ComboItemTest {
 
     @BeforeEach
     void setup() {
-        fakeProduct = new Product(1L, "Product",  "description", BigDecimal.ONE,  1,  Category.BEVERAGE);
+        fakeProduct = new Product(1L, "Product",  "description", BigDecimal.ONE,  1,  Category.BEVERAGE, 1);
     }
 
     @Test

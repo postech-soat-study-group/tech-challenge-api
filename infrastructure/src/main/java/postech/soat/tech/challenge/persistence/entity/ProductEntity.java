@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import postech.soat.tech.challenge.model.Category;
 import postech.soat.tech.challenge.model.Product;
 
+import java.math.BigDecimal;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -22,17 +24,35 @@ public class ProductEntity {
     @Column
     private String description;
     @Column
-    private double price;
+    private BigDecimal price;
     @Column
     private int quantity;
     @Column
     private String category;
+    @Column
+    private int timeToPrepareMinutes;
 
     public static ProductEntity toProductEntity(Product product) {
-        return new ProductEntity(product.getId(), product.getName(), product.getDescription(), product.getPrice(), product.getQuantity(), product.getCategory().name());
+        return new ProductEntity(
+                product.getId(),
+                product.getName(),
+                product.getDescription(),
+                product.getPrice(),
+                product.getQuantity(),
+                product.getCategory().name(),
+                product.getTimeToPrepareMinutes()
+        );
     }
 
     public static Product toProduct(ProductEntity productEntity) {
-        return new Product(productEntity.getId(), productEntity.getName(), productEntity.getDescription(), productEntity.getPrice(), productEntity.getQuantity(), Category.valueOf(productEntity.getCategory()));
+        return new Product(
+                productEntity.getId(),
+                productEntity.getName(),
+                productEntity.getDescription(),
+                productEntity.getPrice(),
+                productEntity.getQuantity(),
+                Category.valueOf(productEntity.getCategory()),
+                productEntity.getTimeToPrepareMinutes()
+        );
     }
 }
