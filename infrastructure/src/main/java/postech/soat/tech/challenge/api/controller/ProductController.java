@@ -47,8 +47,13 @@ public class ProductController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public ApiResponse<List<ProductDTO>> getProducts() {
-        List<Product> products = findProductUseCase.findProducts();
+    public ApiResponse<List<ProductDTO>> getProducts(@RequestParam(required = false) String category) {
+        List<Product> products;
+        if (category != null) {
+            products = findProductUseCase.findProductsByCategory(category);
+        } else {
+            products = findProductUseCase.findProducts();
+        }
         return new ApiResponse<>(ProductDTO.toProductDTOList(products));
     }
 }

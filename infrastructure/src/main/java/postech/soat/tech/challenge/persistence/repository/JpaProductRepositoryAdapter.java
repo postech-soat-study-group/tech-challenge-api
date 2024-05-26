@@ -35,8 +35,13 @@ public class JpaProductRepositoryAdapter implements ProductRepository {
     @Override
     public void delete(Long id) {
         Optional<ProductEntity> productEntity = jpaProductRepository.findById(id);
-        if (productEntity.isPresent()) {
-            jpaProductRepository.delete(productEntity.get());
-        }
+        productEntity.ifPresent(jpaProductRepository::delete);
+    }
+
+    @Override
+    public List<Product> findAllByCategory(String category) {
+        return jpaProductRepository.findAllByCategory(category).stream()
+                .map(ProductEntity::toProduct)
+                .toList();
     }
 }
