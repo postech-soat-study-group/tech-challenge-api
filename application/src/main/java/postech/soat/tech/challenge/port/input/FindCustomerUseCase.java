@@ -4,7 +4,6 @@ import postech.soat.tech.challenge.model.Customer;
 import postech.soat.tech.challenge.port.output.CustomerRepository;
 
 import java.util.Optional;
-import java.util.logging.Logger;
 
 public class FindCustomerUseCase {
     private final CustomerRepository customerRepository;

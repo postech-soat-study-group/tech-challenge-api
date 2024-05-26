@@ -30,6 +30,6 @@ public class CustomerController {
     @ResponseStatus(HttpStatus.OK)
     public ApiResponse<Optional<Customer>> getCustomerByCpf(@PathVariable String cpf) {
         Optional<Customer> customer = findCustomerUseCase.findByCpf(cpf);
-        return new ApiResponse<Optional<Customer>>(customer);
+        return new ApiResponse<>(customer);
     }
 }
