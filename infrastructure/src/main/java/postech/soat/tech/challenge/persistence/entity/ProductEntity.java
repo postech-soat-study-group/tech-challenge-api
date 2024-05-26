@@ -28,6 +28,8 @@ public class ProductEntity {
     private String description;
     @Column(columnDefinition = "float8")
     private BigDecimal price;
+    @Column(name = "time_to_prepare_minutes")
+    private int timeToPrepareMinutes;
     @Column
     private Integer quantity;
     @Column
@@ -39,20 +41,45 @@ public class ProductEntity {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt = LocalDateTime.now();
 
-    public ProductEntity(Long id, String name, String description, BigDecimal price, Integer quantity, String category) {
+    public ProductEntity(
+            Long id,
+            String name,
+            String description,
+            BigDecimal price,
+            int timeToPrepareMinutes,
+            Integer quantity,
+            String category
+    ) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
+        this.timeToPrepareMinutes = timeToPrepareMinutes;
         this.quantity = quantity;
         this.category = category;
     }
 
     public static ProductEntity toProductEntity(Product product) {
-        return new ProductEntity(product.getId(), product.getName(), product.getDescription(), product.getPrice(), product.getQuantity(), product.getCategory().name());
+        return new ProductEntity(
+                product.getId(),
+                product.getName(),
+                product.getDescription(),
+                product.getPrice(),
+                product.getTimeToPrepareMinutes(),
+                product.getQuantity(),
+                product.getCategory().name()
+        );
     }
 
     public static Product toProduct(ProductEntity productEntity) {
-        return new Product(productEntity.getId(), productEntity.getName(), productEntity.getDescription(), productEntity.getPrice(), productEntity.getQuantity(), Category.valueOf(productEntity.getCategory()));
+        return new Product(
+                productEntity.getId(),
+                productEntity.getName(),
+                productEntity.getDescription(),
+                productEntity.getPrice(),
+                productEntity.getQuantity(),
+                Category.valueOf(productEntity.getCategory()),
+                productEntity.getTimeToPrepareMinutes()
+        );
     }
 }
