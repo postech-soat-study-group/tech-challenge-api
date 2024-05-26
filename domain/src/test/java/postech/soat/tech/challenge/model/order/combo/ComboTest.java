@@ -2,8 +2,8 @@ package postech.soat.tech.challenge.model.order.combo;
 
 import org.junit.jupiter.api.Test;
 import postech.soat.tech.challenge.model.Category;
-import postech.soat.tech.challenge.model.InvalidModelException;
 import postech.soat.tech.challenge.model.Product;
+import postech.soat.tech.challenge.validation.DomainInvalidException;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -21,16 +21,16 @@ class ComboTest {
 
     @Test
     public void whenComboItemsIsNull_thenThrowInvalidModelException() {
-        var exception = assertThrows(InvalidModelException.class, () -> new Combo(null));
+        var exception = assertThrows(DomainInvalidException.class, () -> new Combo(null));
 
-        assertEquals("Invalid property on Combo: A Combo cannot exist without items", exception.getMessage());
+        assertEquals("A Combo cannot exist without items", exception.getMessage());
     }
 
     @Test
     public void whenComboItemsIsEmpty_thenThrowInvalidModelException() {
-        var exception = assertThrows(InvalidModelException.class, () -> new Combo(List.of()));
+        var exception = assertThrows(DomainInvalidException.class, () -> new Combo(List.of()));
 
-        assertEquals("Invalid property on Combo: A Combo cannot exist without items", exception.getMessage());
+        assertEquals("A Combo cannot exist without items", exception.getMessage());
     }
 
     @Test
@@ -41,21 +41,21 @@ class ComboTest {
         var fakeComboItem1 = new ComboItem(fakeProduct1, 1);
         var fakeComboItem2 = new ComboItem(fakeProduct2, 1);
 
-        var exception = assertThrows(InvalidModelException.class, () -> new Combo(List.of(fakeComboItem1, fakeComboItem2)));
+        var exception = assertThrows(DomainInvalidException.class, () -> new Combo(List.of(fakeComboItem1, fakeComboItem2)));
 
-        assertEquals("Invalid property on Combo: A Combo cannot have duplicated categories: [BEVERAGE]", exception.getMessage());
+        assertEquals("A Combo cannot have duplicated categories: [BEVERAGE]", exception.getMessage());
     }
 
     @Test
     public void whenComboHasTwoGroupsOfDifferentItemsInTheSameCategory_thenThrowInvalidModelException() {
         var itemList = getDuplicatedComboItems(Category.BEVERAGE, Category.DESSERT);
 
-        var exception = assertThrows(InvalidModelException.class, () -> new Combo(itemList));
+        var exception = assertThrows(DomainInvalidException.class, () -> new Combo(itemList));
         var message = exception.getMessage();
 
         assertTrue(message.contains("BEVERAGE"));
         assertTrue(message.contains("DESSERT"));
-        assertTrue(message.contains("Invalid property on Combo: A Combo cannot have duplicated categories: "));
+        assertTrue(message.contains("A Combo cannot have duplicated categories: "));
     }
 
     @Test

@@ -1,6 +1,5 @@
 package postech.soat.tech.challenge.model.order.combo;
 
-import postech.soat.tech.challenge.model.InvalidModelException;
 import postech.soat.tech.challenge.model.Product;
 import postech.soat.tech.challenge.validation.DomainInvalidException;
 import postech.soat.tech.challenge.validation.DomainValidationResult;

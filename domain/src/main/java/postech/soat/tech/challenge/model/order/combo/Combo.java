@@ -3,7 +3,8 @@ package postech.soat.tech.challenge.model.order.combo;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import postech.soat.tech.challenge.model.Category;
-import postech.soat.tech.challenge.model.InvalidModelException;
+import postech.soat.tech.challenge.validation.DomainInvalidException;
+import postech.soat.tech.challenge.validation.DomainValidationResult;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -40,30 +41,31 @@ public class Combo {
     }
 
     private void validate() {
-        var className = this.getClass().getSimpleName();
+        var domainValidationResult = new DomainValidationResult();
 
         if (items == null || items.isEmpty()) {
-            throw new InvalidModelException(className, "A Combo cannot exist without items");
+            domainValidationResult.addError("A Combo cannot exist without items");
+            throw new DomainInvalidException(domainValidationResult.getErrors(), domainValidationResult.getErrorsMessage());
         }
 
-        validateProductsByCategory();
+        var duplicatedCategories = getDuplicatedProductCategories();
+        if (!duplicatedCategories.isEmpty()) {
+            domainValidationResult.addError("A Combo cannot have duplicated categories: " + duplicatedCategories);
+        }
+
+        if(!domainValidationResult.isValid()) {
+            throw new DomainInvalidException(domainValidationResult.getErrors(), domainValidationResult.getErrorsMessage());
+        }
     }
 
-    private void validateProductsByCategory() {
+    private List<Category> getDuplicatedProductCategories() {
         Map<Category, Long> itemByCategoryMap = this.items.stream()
                 .map(item -> item.product().getCategory())
                 .collect(Collectors.groupingBy(category -> category, Collectors.counting()));
 
-        var duplicatedCategories = itemByCategoryMap.entrySet().stream()
+        return itemByCategoryMap.entrySet().stream()
                 .filter(entry -> entry.getValue() > 1)
                 .map(Map.Entry::getKey)
                 .toList();
-
-        if (duplicatedCategories.isEmpty()) {
-            return;
-        }
-
-        var className = this.getClass().getSimpleName();
-        throw new InvalidModelException(className, "A Combo cannot have duplicated categories: " + duplicatedCategories);
     }
 }

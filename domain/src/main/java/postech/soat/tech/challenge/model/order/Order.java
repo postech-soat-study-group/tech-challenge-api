@@ -3,7 +3,6 @@ package postech.soat.tech.challenge.model.order;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import postech.soat.tech.challenge.model.order.combo.Combo;
-import postech.soat.tech.challenge.model.InvalidModelException;
 import postech.soat.tech.challenge.validation.DomainInvalidException;
 import postech.soat.tech.challenge.validation.DomainValidationResult;
 
