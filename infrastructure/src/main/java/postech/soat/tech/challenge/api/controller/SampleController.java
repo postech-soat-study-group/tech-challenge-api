@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import postech.soat.tech.challenge.api.response.ApiResponse;
-import postech.soat.tech.challenge.persistence.entity.Customer;
-import postech.soat.tech.challenge.persistence.repository.CustomerRepository;
+import postech.soat.tech.challenge.persistence.entity.CustomerEntity;
+import postech.soat.tech.challenge.persistence.repository.JpaCustomerRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +16,7 @@ import java.util.List;
 public class SampleController {
 
 
-    private final CustomerRepository customerRepository;
+    private final JpaCustomerRepository customerRepository;
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
@@ -25,13 +25,13 @@ public class SampleController {
     }
 
     @PostMapping("/customer")
-    public ApiResponse<Customer> addCustomer(@RequestBody Customer customer) {
+    public ApiResponse<CustomerEntity> addCustomer(@RequestBody CustomerEntity customer) {
         return new ApiResponse<>(customerRepository.save(customer));
     }
 
     @GetMapping("/customer/all")
-    public ApiResponse<List<Customer>> listCustomers() {
-        List<Customer> customers = new ArrayList<>();
+    public ApiResponse<List<CustomerEntity>> listCustomers() {
+        List<CustomerEntity> customers = new ArrayList<>();
         customerRepository.findAll().forEach(customers::add);
         return new ApiResponse<>(customers);
     }

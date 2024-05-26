@@ -4,12 +4,13 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import postech.soat.tech.challenge.model.Customer;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity(name = "customer")
-public class Customer {
+public class CustomerEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "customer_id_seq")
@@ -23,5 +24,13 @@ public class Customer {
     private String email;
     @Column
     private String phone;
+
+    public static CustomerEntity toCustomerEntity(Customer customer) {
+        return new CustomerEntity(customer.getId(), customer.getCpf(), customer.getName(), customer.getEmail(), customer.getPhone());
+    }
+
+    public static Customer toCustomer(CustomerEntity customerEntity) {
+        return new Customer(customerEntity.getId(), customerEntity.getName(), customerEntity.getCpf(), customerEntity.getEmail(), customerEntity.getPhone());
+    }
 
 }

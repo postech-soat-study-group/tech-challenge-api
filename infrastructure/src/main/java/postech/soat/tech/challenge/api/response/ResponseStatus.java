@@ -2,5 +2,6 @@ package postech.soat.tech.challenge.api.response;
 
 public enum ResponseStatus {
     SUCCESS,
-    ERROR
+    ERROR,
+    BAD_REQUEST
 }
