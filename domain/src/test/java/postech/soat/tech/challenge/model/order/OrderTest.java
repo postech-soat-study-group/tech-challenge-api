@@ -2,10 +2,10 @@ package postech.soat.tech.challenge.model.order;
 
 import org.junit.jupiter.api.Test;
 import postech.soat.tech.challenge.model.Category;
-import postech.soat.tech.challenge.model.InvalidModelException;
 import postech.soat.tech.challenge.model.Product;
 import postech.soat.tech.challenge.model.order.combo.Combo;
 import postech.soat.tech.challenge.model.order.combo.ComboItem;
+import postech.soat.tech.challenge.validation.DomainInvalidException;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -42,16 +42,16 @@ class OrderTest {
 
     @Test
     public void whenComboListIsNull_thenThrowInvalidModelException() {
-        var exception = assertThrows(InvalidModelException.class, () -> new Order(null));
+        var exception = assertThrows(DomainInvalidException.class, () -> new Order(null));
 
-        assertEquals("Invalid property on Order: An order must have at least one combo", exception.getMessage());
+        assertEquals("An order must have at least one combo", exception.getMessage());
     }
 
     @Test
     public void whenComboListIsEmpty_thenThrowInvalidModelException() {
-        var exception = assertThrows(InvalidModelException.class, () -> new Order(List.of()));
+        var exception = assertThrows(DomainInvalidException.class, () -> new Order(List.of()));
 
-        assertEquals("Invalid property on Order: An order must have at least one combo", exception.getMessage());
+        assertEquals("An order must have at least one combo", exception.getMessage());
     }
 
     private List<Combo> getComboList() {

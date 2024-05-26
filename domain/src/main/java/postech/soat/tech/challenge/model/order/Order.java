@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import postech.soat.tech.challenge.model.order.combo.Combo;
 import postech.soat.tech.challenge.model.InvalidModelException;
+import postech.soat.tech.challenge.validation.DomainInvalidException;
+import postech.soat.tech.challenge.validation.DomainValidationResult;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -44,7 +46,9 @@ public class Order {
 
     private void validate() {
         if (combos == null || combos.isEmpty()) {
-            throw new InvalidModelException(this.getClass().getSimpleName(), "An order must have at least one combo");
+            var domainValidationResult = new DomainValidationResult();
+            domainValidationResult.addError("An order must have at least one combo");
+            throw new DomainInvalidException(domainValidationResult.getErrors(), domainValidationResult.getErrorsMessage());
         }
     }
 
