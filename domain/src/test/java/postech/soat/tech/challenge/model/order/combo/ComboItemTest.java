@@ -23,33 +23,33 @@ class ComboItemTest {
 
     @Test
     public void whenProductIsNull_thenThrowInvalidModelException() {
-        var message = assertThrows(InvalidModelException.class, () -> new ComboItem(null, 1));
+        var exception = assertThrows(InvalidModelException.class, () -> new ComboItem(null, 1));
 
         assertEquals(
                 "Invalid property on ComboItem: A ComboItem cannot exist without a product",
-                message.getMessage()
+                exception.getMessage()
         );
     }
 
     @ParameterizedTest
     @ValueSource(ints = { -1000, -1, 0 })
     public void whenQuantityIsSmallerThanMinimum_thenThrowInvalidModelException(int invalidMinQuantity) {
-        var message = assertThrows(InvalidModelException.class, () -> new ComboItem(fakeProduct, invalidMinQuantity));
+        var exception = assertThrows(InvalidModelException.class, () -> new ComboItem(fakeProduct, invalidMinQuantity));
 
         assertEquals(
                 "Invalid property on ComboItem: Quantity must be greater than or equal to 1",
-                message.getMessage()
+                exception.getMessage()
         );
     }
 
     @ParameterizedTest
     @ValueSource(ints = { 100, 101, 999999 })
     public void whenQuantityIsGreaterThanMaximum_thenThrowInvalidModelException(int invalidMaxQuantity) {
-        var message = assertThrows(InvalidModelException.class, () -> new ComboItem(fakeProduct, invalidMaxQuantity));
+        var exception = assertThrows(InvalidModelException.class, () -> new ComboItem(fakeProduct, invalidMaxQuantity));
 
         assertEquals(
                 "Invalid property on ComboItem: Quantity must be less than or equal to 99",
-                message.getMessage()
+                exception.getMessage()
         );
     }
 
