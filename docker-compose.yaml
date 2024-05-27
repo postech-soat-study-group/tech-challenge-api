@@ -26,7 +26,5 @@ services:
       POSTGRES_USER: burger-user
       POSTGRES_PASSWORD: burger-password
       POSTGRES_DB: burger-store
-    ports:
-      - "5432:5432"
     networks:
       - tech-challenge-network
