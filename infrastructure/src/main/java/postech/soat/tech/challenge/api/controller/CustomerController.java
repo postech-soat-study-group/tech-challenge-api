@@ -26,9 +26,9 @@ public class CustomerController {
         return new ApiResponse<>(CustomerDTO.toCustomerDTO(createdCustomer));
     }
 
-    @GetMapping("findByCpf/{cpf}")
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public ApiResponse<Optional<Customer>> getCustomerByCpf(@PathVariable String cpf) {
+    public ApiResponse<Optional<Customer>> getCustomerByCpf(@RequestParam(required = false) String cpf) {
         Optional<Customer> customer = findCustomerUseCase.findByCpf(cpf);
         return new ApiResponse<>(customer);
     }
