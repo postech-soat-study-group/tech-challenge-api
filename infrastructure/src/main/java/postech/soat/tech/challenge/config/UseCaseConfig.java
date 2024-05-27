@@ -11,6 +11,7 @@ import postech.soat.tech.challenge.port.input.CreateCustomerUseCase;
 import postech.soat.tech.challenge.port.input.CreateProductUseCase;
 import postech.soat.tech.challenge.port.input.DeleteProductUseCase;
 import postech.soat.tech.challenge.port.input.FindProductUseCase;
+import postech.soat.tech.challenge.port.input.order.CreateOrderUseCase;
 import postech.soat.tech.challenge.port.output.CustomerRepository;
 import postech.soat.tech.challenge.port.input.UpdateProductUseCase;
 import postech.soat.tech.challenge.port.output.ProductRepository;
@@ -50,9 +51,13 @@ public class UseCaseConfig {
         return new DeleteProductUseCase(productRepository);
     }
 
-
     @Bean
     public CreateCustomerUseCase createCustomerUseCase() {
         return new CreateCustomerUseCase(customerRepository);
+    }
+
+    @Bean
+    public CreateOrderUseCase createOrderUseCase() {
+        return new CreateOrderUseCase();
     }
 }
