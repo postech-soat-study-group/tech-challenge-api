@@ -9,4 +9,7 @@ public interface OrderRepository {
 
     List<Order> findAll();
 
+    Order findById(Long id);
+
+    List<Order> findByStatus(String status);
 }

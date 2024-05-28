@@ -44,6 +44,34 @@ public class Order {
         this.calculateTimeEstimate();
     }
 
+    public Order(List<Combo> combos, Customer customer, OrderStatus status) {
+        this.combos = combos;
+        this.customer = customer;
+        this.status = status;
+        this.value = BigDecimal.ZERO;
+
+        this.validate();
+        this.calculateValue();
+        this.calculateTimeEstimate();
+    }
+
+    public Order(Long id, List<Combo> combos, Customer customer, OrderStatus status) {
+        this.id = id;
+        this.combos = combos;
+        this.customer = customer;
+        this.status = status;
+        this.value = BigDecimal.ZERO;
+
+        this.validate();
+        this.calculateValue();
+        this.calculateTimeEstimate();
+    }
+
+    public Order(Long id, OrderStatus status) {
+        this.id = id;
+        this.status = status;
+    }
+
     private void validate() {
         if (combos == null || combos.isEmpty()) {
             var domainValidationResult = new DomainValidationResult();

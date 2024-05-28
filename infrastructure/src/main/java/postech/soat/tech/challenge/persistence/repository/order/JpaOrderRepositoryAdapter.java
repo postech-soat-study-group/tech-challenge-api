@@ -24,4 +24,17 @@ public class JpaOrderRepositoryAdapter implements OrderRepository {
     public List<Order> findAll() {
         return List.of();
     }
+
+    @Override
+    public Order findById(Long id) {
+        OrderEntity orderEntity = jpaOrderRepository.findById(id).orElse(null);
+        return OrderEntity.toOrder(orderEntity);
+    }
+
+    @Override
+    public List<Order> findByStatus(String status) {
+        return jpaOrderRepository.findByStatus(status).stream()
+            .map(OrderEntity::toOrder)
+                .toList();
+    }
 }
