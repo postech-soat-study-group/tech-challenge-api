@@ -11,6 +11,7 @@ import java.util.Map;
 @Getter
 @NoArgsConstructor
 public class CreateOrderRequestDTO {
+    private long customerId;
     private List<ComboDTO> combos;
 
     public List<Map<Long, Integer>> toDomain() {

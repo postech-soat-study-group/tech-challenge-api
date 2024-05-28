@@ -18,7 +18,7 @@ public class OrderController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ApiResponse<CreateOrderResponseDTO> createOrder(@RequestBody CreateOrderRequestDTO createOrderDTO) {
-        var createdOrder = createOrderUseCase.create(createOrderDTO.toDomain());
+        var createdOrder = createOrderUseCase.create(createOrderDTO.toDomain(), createOrderDTO.getCustomerId());
         return new ApiResponse<>(CreateOrderResponseDTO.fromOrder(createdOrder));
     }
 }

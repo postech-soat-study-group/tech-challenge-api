@@ -1,6 +1,9 @@
 package postech.soat.tech.challenge.api.request.order;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import postech.soat.tech.challenge.model.order.Order;
 import postech.soat.tech.challenge.model.order.OrderStatus;
 import postech.soat.tech.challenge.model.order.combo.Combo;
@@ -29,7 +32,7 @@ public class CreateOrderResponseDTO {
                 .id(order.getId())
                 .combos(mappedCombos)
                 .value(order.getValue())
-                .customerId(order.getCustomerId())
+                .customerId(order.getCustomer().getId())
                 .status(order.getStatus())
                 .timeEstimate(order.getTimeEstimate())
                 .build();
@@ -37,7 +40,7 @@ public class CreateOrderResponseDTO {
 
     private static List<Map<Long, Integer>> mapCombos(List<Combo> combos) {
         var mappedCombos = new ArrayList<Map<Long, Integer>>();
-        for(var combo: combos) {
+        for (var combo : combos) {
             var map = new HashMap<Long, Integer>();
             combo.getItems().forEach(item -> map.put(item.product().getId(), item.quantity()));
             mappedCombos.add(map);

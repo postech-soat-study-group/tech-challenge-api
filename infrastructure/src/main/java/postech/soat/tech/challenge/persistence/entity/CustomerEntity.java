@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import postech.soat.tech.challenge.model.Customer;
+import postech.soat.tech.challenge.persistence.entity.order.OrderEntity;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,9 +25,11 @@ public class CustomerEntity {
     private String email;
     @Column
     private String phone;
+    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private OrderEntity order;
 
     public static CustomerEntity toCustomerEntity(Customer customer) {
-        return new CustomerEntity(customer.getId(), customer.getCpf(), customer.getName(), customer.getEmail(), customer.getPhone());
+        return new CustomerEntity(customer.getId(), customer.getCpf(), customer.getName(), customer.getEmail(), customer.getPhone(), null);
     }
 
     public static Customer toCustomer(CustomerEntity customerEntity) {

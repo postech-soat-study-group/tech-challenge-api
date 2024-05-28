@@ -1,6 +1,5 @@
 package postech.soat.tech.challenge.api.request.order;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

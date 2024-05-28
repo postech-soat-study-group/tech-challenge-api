@@ -2,6 +2,7 @@ package postech.soat.tech.challenge.model.order;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import postech.soat.tech.challenge.model.Customer;
 import postech.soat.tech.challenge.model.order.combo.Combo;
 import postech.soat.tech.challenge.validation.DomainInvalidException;
 import postech.soat.tech.challenge.validation.DomainValidationResult;
@@ -16,7 +17,7 @@ public class Order {
     private Long id;
     private List<Combo> combos;
     private BigDecimal value;
-    private Long customerId;
+    private Customer customer;
     private OrderStatus status;
     private int timeEstimate;
     private LocalDateTime createdAt;
@@ -32,9 +33,9 @@ public class Order {
         this.calculateTimeEstimate();
     }
 
-    public Order(List<Combo> combos, Long clientId) {
+    public Order(List<Combo> combos, Customer customer) {
         this.combos = combos;
-        this.customerId = clientId;
+        this.customer = customer;
         this.status = OrderStatus.RECEIVED;
         this.value = BigDecimal.ZERO;
 
@@ -47,6 +48,11 @@ public class Order {
         if (combos == null || combos.isEmpty()) {
             var domainValidationResult = new DomainValidationResult();
             domainValidationResult.addError("An order must have at least one combo");
+            throw new DomainInvalidException(domainValidationResult.getErrors(), domainValidationResult.getErrorsMessage());
+        }
+        if (customer == null) {
+            var domainValidationResult = new DomainValidationResult();
+            domainValidationResult.addError("An order must have a customer");
             throw new DomainInvalidException(domainValidationResult.getErrors(), domainValidationResult.getErrorsMessage());
         }
     }

@@ -8,7 +8,11 @@ import java.util.Optional;
 public class FindCustomerUseCase {
     private final CustomerRepository customerRepository;
 
-    public FindCustomerUseCase(CustomerRepository customerRepository) { this.customerRepository = customerRepository; }
+    public FindCustomerUseCase(CustomerRepository customerRepository) {
+        this.customerRepository = customerRepository;
+    }
 
-    public Optional<Customer> findByCpf(String cpf) { return customerRepository.findByCpf(cpf); }
+    public Optional<Customer> findByCpf(String cpf) {
+        return customerRepository.findByCpf(cpf);
+    }
 }

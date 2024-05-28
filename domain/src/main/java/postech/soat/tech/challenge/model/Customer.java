@@ -16,15 +16,15 @@ public class Customer {
     private final String phone;
 
     public Customer(
-        long id,
-        String name,
-        String cpf,
-        String email,
-        String phone
+            long id,
+            String name,
+            String cpf,
+            String email,
+            String phone
     ) {
         DomainValidationResult validationResult = validate(name, cpf, email, phone);
 
-        if(!validationResult.isValid()) {
+        if (!validationResult.isValid()) {
             throw new DomainInvalidException(validationResult.getErrors(), validationResult.getErrorsMessage());
         }
 
@@ -35,11 +35,11 @@ public class Customer {
         this.phone = phone;
     }
 
-    private DomainValidationResult validate (
-        String name,
-        String cpf,
-        String email,
-        String phone
+    private DomainValidationResult validate(
+            String name,
+            String cpf,
+            String email,
+            String phone
     ) {
 
         DomainValidationResult domainValidationResult = new DomainValidationResult();
