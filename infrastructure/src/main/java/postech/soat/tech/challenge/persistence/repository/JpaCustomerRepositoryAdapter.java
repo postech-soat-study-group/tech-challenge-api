@@ -2,15 +2,10 @@ package postech.soat.tech.challenge.persistence.repository;
 
 import org.springframework.stereotype.Component;
 import postech.soat.tech.challenge.model.Customer;
-import postech.soat.tech.challenge.model.Product;
 import postech.soat.tech.challenge.persistence.entity.CustomerEntity;
-import postech.soat.tech.challenge.persistence.entity.ProductEntity;
 import postech.soat.tech.challenge.port.output.CustomerRepository;
-import postech.soat.tech.challenge.port.output.ProductRepository;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.StreamSupport;
 
 @Component
 public class JpaCustomerRepositoryAdapter implements CustomerRepository {
@@ -31,6 +26,12 @@ public class JpaCustomerRepositoryAdapter implements CustomerRepository {
     @Override
     public Optional<Customer> findByCpf(String cpf) {
         Optional<CustomerEntity> optCustomerEntity = jpaCustomerRepository.findByCpf(cpf);
+        return optCustomerEntity.map(CustomerEntity::toCustomer);
+    }
+
+    @Override
+    public Optional<Customer> findById(long customerId) {
+        Optional<CustomerEntity> optCustomerEntity = jpaCustomerRepository.findById(customerId);
         return optCustomerEntity.map(CustomerEntity::toCustomer);
     }
 }

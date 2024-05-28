@@ -44,4 +44,10 @@ public class JpaProductRepositoryAdapter implements ProductRepository {
                 .map(ProductEntity::toProduct)
                 .toList();
     }
+
+    @Override
+    public Optional<Product> findById(Long id) {
+        return jpaProductRepository.findById(id)
+                .map(ProductEntity::toProduct);
+    }
 }

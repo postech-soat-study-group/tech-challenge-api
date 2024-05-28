@@ -28,8 +28,8 @@ public class CustomerController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public ApiResponse<Optional<Customer>> getCustomerByCpf(@RequestParam(required = false) String cpf) {
+    public ApiResponse<CustomerDTO> getCustomerByCpf(@RequestParam(required = false) String cpf) {
         Optional<Customer> customer = findCustomerUseCase.findByCpf(cpf);
-        return new ApiResponse<>(customer);
+        return customer.map(value -> new ApiResponse<>(CustomerDTO.toCustomerDTO(value))).orElseGet(ApiResponse::new);
     }
 }

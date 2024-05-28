@@ -14,7 +14,7 @@ import postech.soat.tech.challenge.port.input.UpdateProductUseCase;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/produtos")
+@RequestMapping("/api/products")
 @AllArgsConstructor
 public class ProductController {
 

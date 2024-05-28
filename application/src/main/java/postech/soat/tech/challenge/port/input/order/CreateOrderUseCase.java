@@ -1,35 +1,71 @@
 package postech.soat.tech.challenge.port.input.order;
 
-import postech.soat.tech.challenge.model.Category;
+import postech.soat.tech.challenge.model.Customer;
 import postech.soat.tech.challenge.model.Product;
 import postech.soat.tech.challenge.model.order.Order;
 import postech.soat.tech.challenge.model.order.OrderStatus;
 import postech.soat.tech.challenge.model.order.combo.Combo;
 import postech.soat.tech.challenge.model.order.combo.ComboItem;
-import postech.soat.tech.challenge.port.input.CreateCustomerUseCase;
+import postech.soat.tech.challenge.port.output.CustomerRepository;
+import postech.soat.tech.challenge.port.output.ProductRepository;
+import postech.soat.tech.challenge.port.output.order.OrderRepository;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
 public class CreateOrderUseCase {
-    Logger logger = Logger.getLogger(CreateCustomerUseCase.class.getName());
+    private final OrderRepository orderRepository;
+    private final ProductRepository productRepository;
+    private final CustomerRepository customerRepository;
+    Logger logger = Logger.getLogger(CreateOrderUseCase.class.getName());
 
-    public Order create(List<Map<Long, Integer>> combos) {
-        // The real implementation depends on the data access layer
+    public CreateOrderUseCase(OrderRepository orderRepository, ProductRepository productRepository, CustomerRepository customerRepository) {
+        this.orderRepository = orderRepository;
+        this.productRepository = productRepository;
+        this.customerRepository = customerRepository;
+    }
+
+    public Order create(List<Map<Long, Integer>> mappedCombos, Long customerId) {
         logger.info("Order received!");
-        var product = new Product(1L, "Product", "description", BigDecimal.TEN, 10, Category.BEVERAGE, 10);
-        return new Order(
-                1L,
-                List.of(new Combo(1L, List.of(new ComboItem(product, 1)),LocalDateTime.now(), LocalDateTime.now())),
-                BigDecimal.TEN,
-                1L,
-                OrderStatus.RECEIVED,
-                10,
-                LocalDateTime.now(),
-                LocalDateTime.now()
-        );
+
+        List<Combo> combos = createCombos(mappedCombos);
+        Customer customer = customerId != null && customerId > 0
+                ? findCustomer(customerId)
+                : findDefaultCustomer();
+
+        return orderRepository.save(new Order(combos, customer, OrderStatus.SENT_TO_KITCHEN));
+    }
+
+    private List<Combo> createCombos(List<Map<Long, Integer>> mappedCombos) {
+        List<Combo> combos = new ArrayList<>();
+        mappedCombos.forEach(map -> {
+            List<ComboItem> comboItems = createComboItems(map);
+            combos.add(new Combo(null, comboItems, LocalDateTime.now(), LocalDateTime.now()));
+        });
+        return combos;
+    }
+
+    private List<ComboItem> createComboItems(Map<Long, Integer> map) {
+        List<ComboItem> comboItems = new ArrayList<>();
+        map.forEach((productId, quantity) -> {
+            Product product = findProduct(productId);
+            comboItems.add(new ComboItem(product, quantity));
+        });
+        return comboItems;
+    }
+
+    private Product findProduct(Long productId) {
+        return productRepository.findById(productId).orElse(null);
+    }
+
+    private Customer findCustomer(Long customerId) {
+        return customerRepository.findById(customerId).orElse(null);
+    }
+
+    private Customer findDefaultCustomer() {
+        return customerRepository.findByCpf("00000000019").orElse(null);
     }
 }

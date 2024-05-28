@@ -1,9 +1,6 @@
 package postech.soat.tech.challenge.api.request.order;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import postech.soat.tech.challenge.model.order.Order;
 import postech.soat.tech.challenge.model.order.OrderStatus;
 import postech.soat.tech.challenge.model.order.combo.Combo;
@@ -17,8 +14,8 @@ import java.util.Map;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-public class CreateOrderResponseDTO {
+@Data
+public class OrderDTO {
     private Long id;
     private List<Map<Long, Integer>> combos;
     private BigDecimal value;
@@ -26,9 +23,9 @@ public class CreateOrderResponseDTO {
     private OrderStatus status;
     private int timeEstimate;
 
-    public static CreateOrderResponseDTO fromOrder(Order order) {
+    public static OrderDTO fromOrder(Order order) {
         var mappedCombos = mapCombos(order.getCombos());
-        return CreateOrderResponseDTO.builder()
+        return OrderDTO.builder()
                 .id(order.getId())
                 .combos(mappedCombos)
                 .value(order.getValue())
@@ -40,11 +37,17 @@ public class CreateOrderResponseDTO {
 
     private static List<Map<Long, Integer>> mapCombos(List<Combo> combos) {
         var mappedCombos = new ArrayList<Map<Long, Integer>>();
-        for (var combo : combos) {
-            var map = new HashMap<Long, Integer>();
-            combo.getItems().forEach(item -> map.put(item.product().getId(), item.quantity()));
-            mappedCombos.add(map);
+        if(combos != null && !combos.isEmpty()) {
+            for (var combo : combos) {
+                var map = new HashMap<Long, Integer>();
+                combo.getItems().forEach(item -> map.put(item.product().getId(), item.quantity()));
+                mappedCombos.add(map);
+            }
         }
         return mappedCombos;
+    }
+
+    public static List<OrderDTO> toOrderDTOList(List<Order> orders) {
+        return orders.stream().map(OrderDTO::fromOrder).toList();
     }
 }
