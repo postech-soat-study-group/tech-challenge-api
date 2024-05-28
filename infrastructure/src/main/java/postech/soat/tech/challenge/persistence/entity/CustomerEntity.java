@@ -25,7 +25,7 @@ public class CustomerEntity {
     private String email;
     @Column
     private String phone;
-    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.ALL)
     private OrderEntity order;
 
     public static CustomerEntity toCustomerEntity(Customer customer) {

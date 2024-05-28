@@ -55,21 +55,47 @@ public class Order {
         this.calculateTimeEstimate();
     }
 
-    public Order(Long id, List<Combo> combos, Customer customer, OrderStatus status) {
-        this.id = id;
-        this.combos = combos;
-        this.customer = customer;
-        this.status = status;
-        this.value = BigDecimal.ZERO;
+    public void nextOrderStatus(OrderStatus nextStatus) {
+        var validationMessage = "";
+        if (this.status == OrderStatus.RECEIVED && nextStatus != OrderStatus.SENT_TO_KITCHEN) {
+            validationMessage = String.format(
+                    "When order status is \"%s\" the new status can be \"%s\"",
+                    this.status,
+                    OrderStatus.SENT_TO_KITCHEN
+            );
+        } else if (this.status == OrderStatus.SENT_TO_KITCHEN && nextStatus != OrderStatus.IN_PREPARATION && nextStatus != OrderStatus.REJECTED) {
+            validationMessage = String.format(
+                    "When order status is \"%s\" the new status can be \"%s\" or \"%s\"",
+                    this.status,
+                    OrderStatus.IN_PREPARATION,
+                    OrderStatus.REJECTED
+            );
+        } else if (this.status == OrderStatus.FINISHED) {
+            validationMessage = String.format(
+                    "When order status is \"%s\" the status can't be changed",
+                    this.status
+            );
+        } else if (this.status == OrderStatus.IN_PREPARATION && nextStatus != OrderStatus.READY) {
+            validationMessage = String.format(
+                    "When order status is \"%s\" the new status can be \"%s\"",
+                    this.status,
+                    OrderStatus.READY
+            );
+        } else if (this.status == OrderStatus.READY && nextStatus != OrderStatus.FINISHED) {
+            validationMessage = String.format(
+                    "When order status is \"%s\" the new status can be \"%s\"",
+                    this.status,
+                    OrderStatus.FINISHED
+            );
+        }
 
-        this.validate();
-        this.calculateValue();
-        this.calculateTimeEstimate();
-    }
+        if (!validationMessage.isEmpty()) {
+            var domainValidationResult = new DomainValidationResult();
+            domainValidationResult.addError(validationMessage);
+            throw new DomainInvalidException(domainValidationResult.getErrors(), domainValidationResult.getErrorsMessage());
+        }
 
-    public Order(Long id, OrderStatus status) {
-        this.id = id;
-        this.status = status;
+        this.status = nextStatus;
     }
 
     private void validate() {
