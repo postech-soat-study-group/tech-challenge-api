@@ -3,6 +3,7 @@ package postech.soat.tech.challenge.port.input.order;
 import postech.soat.tech.challenge.model.Customer;
 import postech.soat.tech.challenge.model.Product;
 import postech.soat.tech.challenge.model.order.Order;
+import postech.soat.tech.challenge.model.order.OrderStatus;
 import postech.soat.tech.challenge.model.order.combo.Combo;
 import postech.soat.tech.challenge.model.order.combo.ComboItem;
 import postech.soat.tech.challenge.port.output.CustomerRepository;
@@ -27,13 +28,15 @@ public class CreateOrderUseCase {
         this.customerRepository = customerRepository;
     }
 
-    public Order create(List<Map<Long, Integer>> mappedCombos, long customerId) {
+    public Order create(List<Map<Long, Integer>> mappedCombos, Long customerId) {
         logger.info("Order received!");
 
         List<Combo> combos = createCombos(mappedCombos);
-        Customer customer = findCustomer(customerId);
+        Customer customer = customerId != null && customerId > 0
+                ? findCustomer(customerId)
+                : findDefaultCustomer();
 
-        return orderRepository.save(new Order(combos, customer));
+        return orderRepository.save(new Order(combos, customer, OrderStatus.SENT_TO_KITCHEN));
     }
 
     private List<Combo> createCombos(List<Map<Long, Integer>> mappedCombos) {
@@ -60,5 +63,9 @@ public class CreateOrderUseCase {
 
     private Customer findCustomer(Long customerId) {
         return customerRepository.findById(customerId).orElse(null);
+    }
+
+    private Customer findDefaultCustomer() {
+        return customerRepository.findByCpf("00000000019").orElse(null);
     }
 }

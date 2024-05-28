@@ -3,15 +3,12 @@ package postech.soat.tech.challenge.api.request.order;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Getter
 @NoArgsConstructor
 public class CreateOrderRequestDTO {
-    private long customerId;
+    private Long customerId;
     private List<ComboDTO> combos;
 
     public List<Map<Long, Integer>> toDomain() {
